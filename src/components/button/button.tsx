@@ -1,11 +1,10 @@
 import { ComponentProps } from 'react';
-import clsx from 'clsx';
 
-import styles from './button.module.css';
-interface ButtonProps extends ComponentProps<'button'> {
-  variant: 'primary' | 'secondary' | 'destructive';
+import { variants, type ButtonVariants } from './button.variants';
+type ButtonProps = {
   size: 'small' | 'medium' | 'large';
-}
+} & ComponentProps<'button'> &
+  ButtonVariants;
 
 export const Button = ({
   variant = 'primary',
@@ -13,13 +12,5 @@ export const Button = ({
   className,
   ...props
 }: ButtonProps) => {
-  let classes = clsx(
-    'bg-indigo-500 hover:bg-indigo-400',
-    styles.button,
-    styles[variant],
-    styles[size],
-    className,
-  );
-
-  return <button {...props} className={classes} />;
+  return <button {...props} className={variants({ variant, size })} />;
 };
